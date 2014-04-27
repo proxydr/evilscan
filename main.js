@@ -6,10 +6,6 @@ var options = require('./libs/options');
 var dns = require('dns');
 var async = require('async');
 
-var City = require('geoip').City;
-var geoip = new City(__dirname+'/share/GeoLiteCity.dat');
-
-
 var evilscan = function(opts,cb) {
     if (false === (this instanceof evilscan)) {
         return new evilscan(opts,cb);
@@ -207,8 +203,9 @@ evilscan.prototype.lookupGeo = function(ip,cb) {
     if (this.cacheGeo[ip]) {
         return cb(null,this.cacheGeo[ip]);
     }
-
-    geoip.lookup(ip,cb);
+    
+    // we don't want geoip stuff
+    cb()
 }
 
 evilscan.prototype.lookupDns = function(ip,cb) {
